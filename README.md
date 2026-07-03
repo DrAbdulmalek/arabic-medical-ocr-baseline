@@ -36,22 +36,69 @@ The ensemble uses confidence-based voting: each engine produces text + confidenc
 - Pediatric orthopedic reports (primary domain)
 - Post-OCR correction pipeline input
 
-## How to Use
+## Inference (Standalone)
 
-This is a documentation-only repo. To use the actual OCR pipeline:
+Run TrOCR inference directly without the full platform:
 
 ```bash
-# Clone the platform
-git clone https://github.com/DrAbdulmalek/omni-medical-suite.git
-cd omni-medical-suite
-
-# Install dependencies
 pip install -r requirements.txt
 
-# Run preprocessing (MANDATORY first step)
-pip install scanner-fixer
+# Single image
+python inference.py --input prescription.png --output result.json
 
-# Start the platform
+# Directory of images
+python inference.py --input ./scans/ --output results.json --mode handwritten
+
+# Printed documents with diacritics removal
+python inference.py --input ./printed/ --output results.json --mode printed --remove-diacritics
+```
+
+**Output format** (JSON):
+```json
+[
+  {
+    "filename": "prescription.png",
+    "text": "الاسم: أحمد ... الدواء: باراسيتامول 500 ملغ",
+    "inference_time_ms": 342.5,
+    "model": "microsoft/trocr-base-handwritten"
+  }
+]
+```
+
+## Benchmark
+
+Evaluate OCR quality against ground truth:
+
+```bash
+# Prepare benchmark data: images + ground_truth.csv (columns: filename, ground_truth)
+# OR: image.png + image.png.txt (paired text files)
+
+python eval_benchmark.py --data ./benchmark_data/ --output benchmark_report.md
+python eval_benchmark.py --data ./benchmark_data/ --output results.json --format json
+```
+
+The benchmark computes **CER** (Character Error Rate) and **WER** (Word Error Rate) with Arabic text normalization (alef/yaa/taa forms, diacritics removal).
+
+## Data Pipeline Setup
+
+Initialize the 14-day pipeline directory structure:
+
+```bash
+python setup_data.py                          # creates ./data/ with all subdirs
+python setup_data.py --root /path/to/project  # custom location
+```
+
+Creates: `scans_printed_raw/`, `scans_printed_fixed/`, `handwriting_raw/`, `handwriting_labeled/`, `ground_truth_verified/`, `ocr_corrections/`, `training_exports/`, `reports/`, `previews/`, `quarantine/`
+
+## Full Platform
+
+For the complete multi-engine ensemble pipeline:
+
+```bash
+git clone https://github.com/DrAbdulmalek/omni-medical-suite.git
+cd omni-medical-suite
+pip install -r requirements.txt
+pip install scanner-fixer  # MANDATORY preprocessing step
 make dev
 ```
 
