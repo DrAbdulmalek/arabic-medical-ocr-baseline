@@ -17,6 +17,9 @@ library_name: transformers
 
 # Arabic Medical OCR — Baseline Ensemble Reference
 
+[![HF Model](https://img.shields.io/badge/🤗-Model%20Card-blue)](https://huggingface.co/DrAbdulmalek/arabic-medical-ocr-baseline)
+[![HF Dataset](https://img.shields.io/badge/🤗-Dataset-green)](https://huggingface.co/datasets/DrAbdulmalek/arabic-medical-ocr-corrections)
+
 > **Note:** This is a reference model card documenting the multi-engine ensemble approach used in the OmniMedical Suite ecosystem. No model weights are hosted here — see "How to Use" below.
 
 ## Model Description

@@ -1,0 +1,35 @@
+{
+  "model_type": "ensemble",
+  "architecture": "multi-engine-voting",
+  "description": "Arabic Medical OCR Baseline Ensemble — reference config, no weights hosted",
+  "engines": [
+    {"name": "paddleocr", "role": "detection+recognition", "language": ["ar", "en"]},
+    {"name": "tesseract", "role": "recognition", "language": ["ar", "en"], "version": "5"},
+    {"name": "easyocr", "role": "recognition", "language": ["ar"]},
+    {"name": "trocr", "role": "recognition", "base_model": "microsoft/trocr-base-handwritten"},
+    {"name": "surya", "role": "recognition", "language": ["ar", "en"]}
+  ],
+  "voting": {
+    "method": "confidence_weighted_majority",
+    "min_confidence": 0.5
+  },
+  "preprocessing": {
+    "mandatory": ["scanner-fixer"],
+    "steps": ["deskew", "crop", "enhance"]
+  },
+  "postprocessing": {
+    "arabic_normalization": true,
+    "medical_dictionary_correction": true,
+    "diacritics_handling": "preserve"
+  },
+  "ecosystem": {
+    "platform": "DrAbdulmalek/omni-medical-suite",
+    "preprocessing": "DrAbdulmalek/scanner-fixer",
+    "benchmarks": "DrAbdulmalek/medical-ocr-benchmarks",
+    "ground_truth": "DrAbdulmalek/medical-ocr-ground-truth",
+    "training_hub": "DrAbdulmalek/medical-ocr-training-hub"
+  },
+  "license": "mit",
+  "language": ["ar", "en"],
+  "domain": "medical-ocr"
+}
