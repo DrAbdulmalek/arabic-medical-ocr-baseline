@@ -1,3 +1,19 @@
+> ## Repository Archived
+
+This repository has been **archived**. Its code and functionality have been consolidated into the
+[omni-medical-suite](https://github.com/DrAbdulmalek/omni-medical-suite) monorepo.
+
+| Detail | Value |
+|--------|-------|
+| **Suite location** | `packages/omni-ocr/` |
+| **Original purpose** | Reference model card for multi-engine OCR ensemble |
+| **Archived on** | 2026-07-07 |
+| **Status** | Read-only - no further updates will be made here |
+
+Please use [omni-medical-suite](https://github.com/DrAbdulmalek/omni-medical-suite) for all development.
+
+---
+
 ---
 license: mit
 task: text-generation
